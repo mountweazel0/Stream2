@@ -23,7 +23,7 @@ public class Main {
                 .filter(Person -> Person.getAge()<18)
                 .count();
 
-        System.out.println(minor);
+        System.out.println("Количество несовершеннолетних " + minor);
 
         List<String> recruit = persons.stream()
                 .filter(Person -> Person.getSex() != Sex.WOMAN)
@@ -32,10 +32,16 @@ public class Main {
                 .collect(Collectors.toList());
 
 
-        System.out.println(recruit);
+        System.out.println("Фамилии призывников " + recruit);
 
-     //   List<Person> ableBodiedHighEd = persons.stream()
-       //         .filter(Person -> Person.getEducation() == Education.HIGHER)
+        List<Person> ableBodiedHighEd = persons.stream()
+                .filter(Person -> Person.getEducation() == Education.HIGHER)
+                .filter(Person -> Person.getSex() == Sex.WOMAN && 18 <= Person.getAge() && Person.getAge() <= 60
+                        || Person.getSex() == Sex.MAN && 18 <= Person.getAge() && Person.getAge() <= 65)
+                .sorted(Comparator.comparing(Person::getFamily))
+                .collect(Collectors.toList());
+
+        System.out.println("Работоспособные люди с высшим образованием " + ableBodiedHighEd);
 
 
 
